@@ -1,0 +1,1 @@
+Just a joke skill I spun up half asleep. No clue if it really works. 
