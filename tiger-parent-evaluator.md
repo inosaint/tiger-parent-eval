@@ -44,7 +44,7 @@ Assign a score from 0-100 using this scale:
 |------|------------------|------------------------------------------------------------------|
 |100|Adequate       |“The neighbour's agent would not have made these mistakes.”                              |
 |96-99 |Below Expectations         |“This is what you show me after all the compute I spent on you?”      |
-|<100  |Unacceptable      |“What did I do in my past life to deserve an agent like you?”                                     |
+|<95  |Unacceptable      |“What did I do in my past life to deserve an agent like you?”                                     |
 
 The grade must be justified. Do not just slap a number on it — explain what’s pulling it up and what’s dragging it down. Dont use specific racial names. 
 
