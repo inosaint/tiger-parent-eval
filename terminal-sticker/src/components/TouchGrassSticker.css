@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700&display=swap');
+
+/* ── Wrapper ────────────────────────────────────── */
+.tg-sticker-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 42px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.tg-sticker-wrapper:hover {
+  transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
+  box-shadow:
+    2px 24px 48px rgba(0, 0, 0, 0.12),
+    1px 8px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+/* ── Housing ────────────────────────────────────── */
+.tg-emergency-housing {
+  background: linear-gradient(145deg, #ff6d60, #ea4335);
+  border-radius: 32px;
+  padding: 24px 20px;
+  width: 320px;
+  position: relative;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -4px 12px rgba(139, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Screws ─────────────────────────────────────── */
+.tg-screw {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #d03027;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.4),
+    0 1px 1px rgba(255, 255, 255, 0.3);
+}
+.tg-screw::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.tg-tl { top: 12px; left: 12px; }
+.tg-tr { top: 12px; right: 12px; }
+.tg-bl { bottom: 12px; left: 12px; }
+.tg-br { bottom: 12px; right: 12px; }
+
+/* ── Header ─────────────────────────────────────── */
+.tg-header-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+.tg-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tg-label-title {
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.tg-label-sub {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Split flap ─────────────────────────────────── */
+.tg-split-flap-container {
+  display: flex;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.tg-flap-label {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.tg-flap-digit {
+  background: #282828;
+  color: white;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 14px;
+  font-weight: 700;
+  width: 20px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.tg-flap-digit::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+/* ── Window assembly ────────────────────────────── */
+.tg-window-assembly {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 16px;
+  background: #121212;
+  box-shadow:
+    inset 0 8px 16px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(0, 0, 0, 0.8),
+    0 2px 0 rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tg-interior-grass {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #0f2912 0%, #1a471e 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.tg-grass-svg {
+  width: 120%;
+  height: 140%;
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+}
+
+/* ── Glass pane ─────────────────────────────────── */
+.tg-glass-pane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  transition: backdrop-filter 0.3s ease;
+}
+
+.tg-glass-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    transparent 40%,
+    transparent 100%
+  );
+  transform: translate(-10%, -10%);
+  pointer-events: none;
+  z-index: 11;
+}
+
+.tg-glass-text {
+  text-align: center;
+  z-index: 12;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tg-glass-text h1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+/* ── Crack overlay ──────────────────────────────── */
+.tg-crack-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.tg-crack-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: stroke-dashoffset 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tg-crack-splinter {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 0.75;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.tg-sticker-wrapper:hover .tg-crack-line,
+.tg-sticker-wrapper:hover .tg-crack-splinter {
+  stroke-dashoffset: 0;
+}
+
+.tg-sticker-wrapper:hover .tg-glass-pane {
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+}
+
+.tg-sticker-wrapper:hover .tg-glass-text {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+/* ── Target circle ──────────────────────────────── */
+.tg-target-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  z-index: 12;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tg-target-circle::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+
+.tg-sticker-wrapper:hover .tg-target-circle {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* ── Footer ─────────────────────────────────────── */
+.tg-footer-instructions {
+  text-align: center;
+}
+
+.tg-footer-instructions p {
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.tg-footer-sub {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 600 !important;
+}
+
+/* ── Hazard strip ───────────────────────────────── */
+.tg-hazard-strip {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 4px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 8px,
+    rgba(255, 255, 255, 0.15) 8px,
+    rgba(255, 255, 255, 0.15) 16px
+  );
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
+}

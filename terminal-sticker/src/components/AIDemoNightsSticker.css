@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Instrument+Serif:ital@0;1&display=swap');
+
+/* ── Scene ──────────────────────────────────────── */
+.aidn-scene {
+  perspective: 2000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aidn-scene:hover .aidn-computer-unit {
+  transform: rotateY(-5deg) rotateX(2deg);
+}
+
+/* ── Computer unit ──────────────────────────────── */
+.aidn-computer-unit {
+  position: relative;
+  width: 360px;
+  height: 380px;
+  transform-style: preserve-3d;
+  transform: rotateY(-15deg) rotateX(5deg);
+  transition: transform 0.5s ease-out;
+}
+
+/* ── Faces ──────────────────────────────────────── */
+.aidn-face {
+  position: absolute;
+  background: #E0DCCF;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.aidn-front {
+  width: 360px;
+  height: 380px;
+  transform: translateZ(100px);
+  background: linear-gradient(135deg, #F0EDE0 0%, #E0DCCF 100%);
+  box-shadow:
+    inset 2px 2px 5px rgba(255, 255, 255, 0.8),
+    inset -5px -5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.aidn-back {
+  width: 360px;
+  height: 380px;
+  transform: translateZ(-100px) rotateY(180deg);
+  background: #C4C0B3;
+}
+
+.aidn-left {
+  width: 200px;
+  height: 380px;
+  transform: rotateY(-90deg) translateZ(100px);
+  background: #E0DCCF;
+  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.aidn-right {
+  width: 200px;
+  height: 380px;
+  transform: rotateY(90deg) translateZ(260px);
+  background: #C4C0B3;
+  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.aidn-top {
+  width: 360px;
+  height: 200px;
+  transform: rotateX(90deg) translateZ(100px);
+  background: #F0EDE0;
+}
+
+.aidn-bottom {
+  width: 360px;
+  height: 200px;
+  transform: rotateX(-90deg) translateZ(280px);
+  background: #A09C8F;
+  box-shadow: 0 50px 80px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Screen ─────────────────────────────────────── */
+.aidn-screen-inset {
+  width: 280px;
+  height: 220px;
+  background: #D1CEC7;
+  border-radius: 16px;
+  box-shadow:
+    inset 2px 2px 8px rgba(0, 0, 0, 0.2),
+    inset -2px -2px 8px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.aidn-crt {
+  width: 260px;
+  height: 200px;
+  background: #222529;
+  border-radius: 40% 40% 40% 40% / 10% 10% 10% 10%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 1);
+}
+
+.aidn-crt::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.aidn-crt-glow {
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  border-radius: 12px;
+  z-index: 2;
+  color: #fff;
+  font-family: 'VT323', monospace;
+  padding: 15px;
+  font-size: 14px;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* ── Graffiti text ──────────────────────────────── */
+.aidn-graffiti-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.aidn-graffiti-text {
+  font-family: 'VT323', monospace;
+  font-size: 56px;
+  font-weight: bold;
+  color: #9932CC;
+  text-shadow:
+    0 0 8px #9932CC,
+    0 0 16px #9932CC,
+    0 0 32px #800080,
+    0 0 64px #800080,
+    3px 3px 0 #4B0082,
+    -2px -2px 0 #BA55D3;
+  text-align: center;
+  line-height: 0.85;
+  letter-spacing: 3px;
+}
+
+.aidn-subtitle-text {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 28px;
+  color: #E8D5F2;
+  margin-top: 12px;
+  opacity: 0.9;
+  text-shadow: 0 0 8px rgba(153, 50, 204, 0.6);
+}
+
+/* ── Floppy slot ────────────────────────────────── */
+.aidn-floppy-slot {
+  width: 140px;
+  height: 12px;
+  background: #333;
+  border-radius: 6px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin-left: 100px;
+}
+
+/* ── Grill / vents ──────────────────────────────── */
+.aidn-grill {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  width: 30px;
+  height: 20px;
+}
+
+.aidn-vent {
+  background: #333;
+  border-radius: 1px;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Decorative stickers on the computer ────────── */
+.aidn-sticker {
+  position: absolute;
+  z-index: 5;
+  transform-style: flat;
+}
+
+.aidn-sticker-starburst {
+  width: 38px;
+  height: 38px;
+  background: #FFD93D;
+  top: 48px;
+  left: 16px;
+  transform: translateZ(101px) rotate(-12deg);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aidn-sticker-starburst::after {
+  content: '!';
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: #D63031;
+  transform: rotate(12deg);
+  font-weight: bold;
+}
+
+.aidn-sticker-bengaluru {
+  width: 70px;
+  height: 24px;
+  background: #228B22;
+  bottom: 95px;
+  right: 18px;
+  transform: translateZ(102px) rotate(4deg);
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.25),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.15),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.25);
+  border: 2px solid #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'VT323', monospace;
+  font-size: 11px;
+  color: #fff;
+  letter-spacing: 1.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Keyboard ───────────────────────────────────── */
+.aidn-keyboard-assembly {
+  position: absolute;
+  width: 360px;
+  height: 140px;
+  bottom: -118px;
+  transform-style: preserve-3d;
+  transform-origin: top center;
+  --kb-angle: 66deg;
+  transform: translateZ(164px) rotateX(var(--kb-angle));
+  --kb-thickness: 18px;
+}
+
+.aidn-kb-base {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #E0DCCF;
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+    inset -5px -5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateZ(calc(var(--kb-thickness) / 2));
+  overflow: hidden;
+}
+
+.aidn-kb-front,
+.aidn-kb-back {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--kb-thickness);
+}
+
+.aidn-kb-front {
+  bottom: 0;
+  background: linear-gradient(180deg, #cdc9bb 0%, #b5b1a3 100%);
+  transform-origin: bottom center;
+  transform: translateZ(calc(var(--kb-thickness) / 2)) rotateX(90deg);
+}
+
+.aidn-kb-back {
+  top: 0;
+  background: linear-gradient(180deg, #e5e1d4 0%, #c9c5b8 100%);
+  transform-origin: top center;
+  transform: translateZ(calc(var(--kb-thickness) / 2)) rotateX(-90deg);
+}
+
+.aidn-kb-left,
+.aidn-kb-right {
+  position: absolute;
+  top: 0;
+  width: var(--kb-thickness);
+  height: 100%;
+  background: linear-gradient(180deg, #d1cdbf 0%, #b7b3a6 100%);
+}
+
+.aidn-kb-left {
+  left: 0;
+  transform-origin: left center;
+  transform: translateZ(calc(var(--kb-thickness) / 2)) rotateY(90deg);
+}
+
+.aidn-kb-right {
+  right: 0;
+  transform-origin: right center;
+  transform: translateZ(calc(var(--kb-thickness) / 2)) rotateY(-90deg);
+}
+
+.aidn-kb-shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: top center;
+  transform: rotateX(calc(-90deg - var(--kb-angle))) translateZ(20px);
+  box-shadow:
+    0 40px 70px rgba(0, 0, 0, 0.25),
+    0 20px 30px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.aidn-keys-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
+  padding: 15px;
+  transform: translateZ(8px);
+  transform-style: preserve-3d;
+}
+
+.aidn-key {
+  height: 27px;
+  background: #ECE8DA;
+  border-radius: 4px;
+  box-shadow:
+    0 6px 0 #C4C0B3,
+    0 8px 7px rgba(0, 0, 0, 0.2);
+  transform: translateZ(1px);
+}
+
+.aidn-wide {
+  grid-column: span 2;
+}
+
+.aidn-space {
+  grid-column: span 6;
+}
