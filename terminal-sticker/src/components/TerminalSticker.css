@@ -1,0 +1,215 @@
+:root {
+  --sticker-border: #f8f8f8;
+  --terminal-bg: #1B2B34;
+  --ocean-blue: #4A7C9B;
+  --ocean-cyan: #6FB3C2;
+  --ocean-light: #9BB8D3;
+  --ocean-dim: rgba(159, 184, 211, 0.5);
+  --ocean-glow: 0 0 2px rgba(111, 179, 194, 0.6),
+    0 0 8px rgba(74, 124, 155, 0.3);
+  --traffic-red: #FF5F56;
+  --traffic-yellow: #FFBD2E;
+  --traffic-green: #27C93F;
+}
+
+/* ── Sticker wrapper ────────────────────────────── */
+.sticker-wrapper {
+  position: relative;
+  padding: 12px;
+  background: var(--sticker-border);
+  border-radius: 12px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    inset 0 0 20px rgba(0, 0, 0, 0.05);
+  transform: rotate(-3deg);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.sticker-wrapper:hover {
+  transform: rotate(-1deg) scale(1.02) translateY(-5px);
+  box-shadow:
+    0 30px 50px rgba(0, 0, 0, 0.7),
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 1),
+    inset 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Window chrome ──────────────────────────────── */
+.window {
+  width: 420px;
+  background: var(--terminal-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.window-inner {
+  background: var(--terminal-bg);
+}
+
+/* ── Title bar ──────────────────────────────────── */
+.title-bar {
+  background: linear-gradient(to bottom, #3A4B5C, #2A3B4C);
+  padding: 10px 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px 8px 0 0;
+}
+
+.traffic-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.traffic-light--red {
+  background: var(--traffic-red);
+}
+
+.traffic-light--yellow {
+  background: var(--traffic-yellow);
+}
+
+.traffic-light--green {
+  background: var(--traffic-green);
+}
+
+.title-text {
+  flex: 1;
+  text-align: center;
+  color: var(--ocean-light);
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.8;
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+}
+
+/* ── CRT screen ─────────────────────────────────── */
+.crt-screen-container {
+  position: relative;
+  background: var(--terminal-bg);
+  color: var(--ocean-light);
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  z-index: 2;
+  animation: flicker 0.15s infinite;
+}
+
+.screen-content {
+  padding: 16px 12px;
+}
+
+/* ── Overlays ───────────────────────────────────── */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.8) 120%
+  );
+  z-index: 11;
+  pointer-events: none;
+}
+
+.glare {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(15deg);
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* ── Lines & animation ──────────────────────────── */
+.line {
+  display: block;
+  margin-bottom: 4px;
+  opacity: 0;
+  animation: type 0.1s forwards;
+}
+
+.line--blue {
+  color: var(--ocean-blue);
+}
+
+.line-icon {
+  margin-right: 8px;
+}
+
+.sys-prompt {
+  color: var(--ocean-blue);
+  margin-right: 8px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.2em;
+  background-color: var(--ocean-cyan);
+  vertical-align: bottom;
+  animation: blink 1.06s step-end infinite;
+  margin-left: 2px;
+  border-radius: 1px;
+}
+
+/* ── Delay classes ──────────────────────────────── */
+.line-1 { animation-delay: 0.2s; }
+.line-2 { animation-delay: 0.6s; }
+.line-3 { animation-delay: 0.8s; }
+.line-4 { animation-delay: 1.0s; }
+.line-5 { animation-delay: 1.2s; }
+.line-6 { animation-delay: 1.4s; }
+.line-7 { animation-delay: 1.6s; }
+.line-8 { animation-delay: 2.2s; }
+
+/* ── Keyframes ──────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes type {
+  to { opacity: 1; }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.98; }
+  50% { opacity: 1; }
+  100% { opacity: 0.99; }
+}
