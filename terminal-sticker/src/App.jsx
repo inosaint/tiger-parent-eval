@@ -1,10 +1,12 @@
 import { useState, useRef, useCallback } from 'react';
 import html2canvas from 'html2canvas';
 import TerminalSticker from './components/TerminalSticker';
+import TormentNexusSticker from './components/TormentNexusSticker';
 import './App.css';
 
 const BUILT_IN_STICKERS = [
   { id: 'terminal-mindset', name: 'Terminal Mindset', type: 'component' },
+  { id: 'torment-nexus', name: 'Torment Nexus', type: 'component' },
 ];
 
 function App() {
@@ -136,7 +138,8 @@ function App() {
         <div className="stage">
           {selected?.type === 'component' && (
             <div ref={stickerRef} className="sticker-capture">
-              <TerminalSticker />
+              {selected.id === 'terminal-mindset' && <TerminalSticker />}
+              {selected.id === 'torment-nexus' && <TormentNexusSticker />}
             </div>
           )}
           {selected?.type === 'html' && (
