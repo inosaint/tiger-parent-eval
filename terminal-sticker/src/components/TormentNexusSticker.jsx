@@ -38,9 +38,7 @@ export default function TormentNexusSticker() {
         </defs>
 
         {/* Base circle */}
-        <circle cx="200" cy="200" r="198" fill="url(#sticker-surface)" />
-        {/* Dashed ring */}
-        <circle cx="200" cy="200" r="185" fill="none" stroke="#222" strokeWidth="1" strokeDasharray="4 4" />
+        <circle cx="200" cy="200" r="198" fill="url(#sticker-surface)" stroke="#333" strokeWidth="1" />
 
         {/* Lens assembly */}
         <g transform="translate(0, -25)">
