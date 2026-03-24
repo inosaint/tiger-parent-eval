@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tiger Parent Evaluator — Talk</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,400;1,8..60,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #0a0a0a;
-    --surface: #141414;
-    --surface2: #1e1e1e;
-    --text: #e8e8e8;
-    --text-dim: #888;
-    --accent: #ff8c00;
-    --accent-dim: #cc7000;
-    --red: #ff4444;
-    --green: #44cc66;
-    --yellow: #ffcc00;
-    --blue: #4488ff;
+    --bg: #FAF6F1;
+    --surface: #FFFFFF;
+    --surface2: #E8E0D8;
+    --text: #1A1612;
+    --text-dim: #6B5E54;
+    --accent: #D4763C;
+    --accent-dim: #B8613A;
+    --red: #C0392B;
+    --green: #3D7A4A;
+    --yellow: #B8860B;
+    --blue: #4A6FA5;
   }
 
   body {
@@ -77,20 +77,25 @@
 
   /* Typography */
   h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
     font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1rem;
+    letter-spacing: -0.02em;
   }
 
   h2 {
+    font-family: 'Source Serif 4', Georgia, serif;
     font-size: clamp(1.8rem, 4vw, 3.2rem);
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
   }
 
   h3 {
+    font-family: 'Source Serif 4', Georgia, serif;
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     font-weight: 600;
     margin-bottom: 1rem;
@@ -140,6 +145,7 @@
     border: 1px solid var(--surface2);
     border-radius: 12px;
     padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
   .card h3 { margin-bottom: 0.75rem; }
@@ -184,36 +190,38 @@
   .grade-table td {
     padding: 0.75rem 1.5rem;
     border-bottom: 1px solid var(--surface2);
-    color: var(--text-dim);
+    color: var(--text);
   }
 
   .grade-table tr:last-child td { border-bottom: none; }
 
-  .grade-table .score { font-family: 'JetBrains Mono', monospace; color: var(--text); font-weight: 600; }
+  .grade-table .score { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
 
   /* Code/report card block */
   .report-card {
-    background: var(--surface);
-    border: 1px solid var(--surface2);
+    background: #1A1612;
+    border: 1px solid #2A2420;
     border-radius: 12px;
     padding: 2rem 2.5rem;
     font-family: 'JetBrains Mono', monospace;
     font-size: clamp(0.7rem, 1.4vw, 1rem);
     line-height: 1.7;
-    color: var(--text-dim);
+    color: #BDB0A4;
     max-width: 750px;
     width: 100%;
     white-space: pre;
     overflow-x: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
   }
 
   .report-card .hl { color: var(--accent); }
-  .report-card .grade { color: var(--yellow); font-weight: 600; }
+  .report-card .grade { color: #E8A84C; font-weight: 600; }
 
   /* Quote */
   blockquote {
     border-left: 3px solid var(--accent);
     padding-left: 1.5rem;
+    font-family: 'Source Serif 4', Georgia, serif;
     font-style: italic;
     color: var(--text);
     font-size: clamp(1.1rem, 2.2vw, 1.6rem);
@@ -241,9 +249,9 @@
     font-weight: 600;
     margin-right: 0.5rem;
   }
-  .severity.critical { background: #ff444433; color: var(--red); }
-  .severity.significant { background: #ffcc0033; color: var(--yellow); }
-  .severity.minor { background: #4488ff33; color: var(--blue); }
+  .severity.critical { background: #C0392B18; color: var(--red); }
+  .severity.significant { background: #B8860B18; color: var(--yellow); }
+  .severity.minor { background: #4A6FA518; color: var(--blue); }
 
   .flow-steps {
     display: flex;
@@ -261,6 +269,7 @@
     padding: 1.2rem 1.8rem;
     text-align: center;
     min-width: 160px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
   .flow-step .num {
@@ -288,7 +297,7 @@
     left: 3vw;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
-    color: #444;
+    color: #C0B8AE;
     z-index: 100;
   }
 
