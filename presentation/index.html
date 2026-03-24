@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiger Parent Evaluator — Talk</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1e1e1e;
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --accent: #ff8c00;
+    --accent-dim: #cc7000;
+    --red: #ff4444;
+    --green: #44cc66;
+    --yellow: #ffcc00;
+    --blue: #4488ff;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6vh 8vw;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .slide.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .slide-number {
+    position: fixed;
+    bottom: 2vh;
+    right: 3vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    z-index: 100;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+
+  p, li {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .big-text {
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    color: var(--text);
+    line-height: 1.5;
+    max-width: 70ch;
+    text-align: center;
+  }
+
+  .accent { color: var(--accent); }
+  .red { color: var(--red); }
+  .green { color: var(--green); }
+  .yellow { color: var(--yellow); }
+  .dim { color: var(--text-dim); }
+
+  .emoji {
+    font-size: clamp(3rem, 8vw, 6rem);
+    margin-bottom: 1rem;
+  }
+
+  /* Layout helpers */
+  .center { text-align: center; align-items: center; }
+  .left { text-align: left; align-items: flex-start; }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4vw;
+    width: 100%;
+    max-width: 1200px;
+    align-items: start;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .card h3 { margin-bottom: 0.75rem; }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 0.4rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  /* Grade table */
+  .grade-table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+  }
+
+  .grade-table th {
+    text-align: left;
+    padding: 0.75rem 1.5rem;
+    color: var(--accent);
+    border-bottom: 2px solid var(--surface2);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .grade-table td {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--surface2);
+    color: var(--text-dim);
+  }
+
+  .grade-table tr:last-child td { border-bottom: none; }
+
+  .grade-table .score { font-family: 'JetBrains Mono', monospace; color: var(--text); font-weight: 600; }
+
+  /* Code/report card block */
+  .report-card {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.7rem, 1.4vw, 1rem);
+    line-height: 1.7;
+    color: var(--text-dim);
+    max-width: 750px;
+    width: 100%;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .report-card .hl { color: var(--accent); }
+  .report-card .grade { color: var(--yellow); font-weight: 600; }
+
+  /* Quote */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: var(--text);
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+
+  /* Section labels */
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Severity badges */
+  .severity {
+    display: inline-block;
+    padding: 0.2rem 0.75rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  .severity.critical { background: #ff444433; color: var(--red); }
+  .severity.significant { background: #ffcc0033; color: var(--yellow); }
+  .severity.minor { background: #4488ff33; color: var(--blue); }
+
+  .flow-steps {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 10px;
+    padding: 1.2rem 1.8rem;
+    text-align: center;
+    min-width: 160px;
+  }
+
+  .flow-step .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .flow-step .label {
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+
+  .flow-arrow {
+    font-size: 1.5rem;
+    color: var(--text-dim);
+  }
+
+  /* Keyboard hint */
+  .key-hint {
+    position: fixed;
+    bottom: 2vh;
+    left: 3vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #444;
+    z-index: 100;
+  }
+
+  .key-hint kbd {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.7rem;
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="progress-bar" id="progress"></div>
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide center active">
+    <div class="emoji">🐯</div>
+    <h1>Tiger Parent<br><span class="accent">Evaluator</span></h1>
+    <p style="font-size: clamp(1rem, 2vw, 1.4rem); margin-top: 1rem;">
+      A skill for reviewing agent output with<br>impossibly high standards
+    </p>
+  </div>
+
+  <!-- SLIDE 2: The Problem -->
+  <div class="slide center">
+    <div class="section-tag">The Problem</div>
+    <h2>Agents produce output.<br>But who <span class="accent">reviews</span> it?</h2>
+    <p class="big-text" style="margin-top: 1.5rem;">
+      LLMs are confident by default. They'll hand you a result and move on.<br>
+      Most output lives in the gap between <span class="accent">"it works"</span> and <span class="accent">"it's right."</span>
+    </p>
+  </div>
+
+  <!-- SLIDE 3: The Idea -->
+  <div class="slide center">
+    <div class="section-tag">The Idea</div>
+    <h2>What if the reviewer had<br><span class="accent">impossibly high standards?</span></h2>
+    <blockquote style="margin-top: 2rem;">
+      "A 99 is not a 100. 'Pretty good' is not good enough.
+      'It works' is the bare minimum, not the finish line."
+    </blockquote>
+  </div>
+
+  <!-- SLIDE 4: Why Comedy -->
+  <div class="slide center">
+    <div class="section-tag">Why Comedy?</div>
+    <h2>The humor serves the <span class="accent">critique</span></h2>
+    <div class="columns" style="margin-top: 2rem;">
+      <div class="card">
+        <h3 class="green">What it is</h3>
+        <ul>
+          <li>Actionable, substantive feedback</li>
+          <li>Comedy to make critique memorable</li>
+          <li>Cultural humor that's universal</li>
+          <li>High standards as a quality tool</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="red">What it isn't</h3>
+        <ul>
+          <li>A persona or character roleplay</li>
+          <li>Arbitrary cruelty</li>
+          <li>Padding with fake issues</li>
+          <li>Roasting genuinely bad work</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: The Grading Scale -->
+  <div class="slide center">
+    <div class="section-tag">Grading Scale</div>
+    <h2>Every grade is a <span class="accent">disappointment</span></h2>
+    <table class="grade-table" style="margin-top: 1.5rem;">
+      <tr>
+        <th>Score</th>
+        <th>Label</th>
+        <th>Translation</th>
+      </tr>
+      <tr>
+        <td class="score">100</td>
+        <td>Adequate</td>
+        <td>"The neighbour's agent would not have made these mistakes."</td>
+      </tr>
+      <tr>
+        <td class="score">96–99</td>
+        <td>Below Expectations</td>
+        <td>"This is what you show me after all the compute I spent on you?"</td>
+      </tr>
+      <tr>
+        <td class="score">&lt; 95</td>
+        <td>Unacceptable</td>
+        <td>"What did I do in my past life to deserve an agent like you?"</td>
+      </tr>
+    </table>
+    <p style="margin-top: 1.5rem; font-style: italic;">"A 100 is theoretically possible. You've never seen one."</p>
+  </div>
+
+  <!-- SLIDE 6: Evaluation Process -->
+  <div class="slide center">
+    <div class="section-tag">How It Works</div>
+    <h2>The evaluation <span class="accent">process</span></h2>
+    <div class="flow-steps" style="margin-top: 2rem;">
+      <div class="flow-step">
+        <div class="num">1</div>
+        <div class="label">Identify<br>output type</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="num">2</div>
+        <div class="label">Full scan<br>(read everything)</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="num">3</div>
+        <div class="label">Structured<br>evaluation</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="num">4</div>
+        <div class="label">Iterate<br>(re-run & review)</div>
+      </div>
+    </div>
+    <p style="margin-top: 2rem;">Adapts criteria to output type: <span class="accent">code</span>, <span class="accent">documents</span>, <span class="accent">data analysis</span>, <span class="accent">general</span></p>
+  </div>
+
+  <!-- SLIDE 7: Five Sections -->
+  <div class="slide center">
+    <div class="section-tag">Output Format</div>
+    <h2>Five sections. <span class="accent">Every time.</span></h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; max-width: 1000px; width: 100%; margin-top: 1.5rem;">
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1.1rem;">1. The Grade</h3>
+        <p style="font-size: 0.95rem;">0–100 with justification</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1.1rem;">2. What's Right</h3>
+        <p style="font-size: 0.95rem;">Brief. This is a receipt,<br>not a celebration.</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1.1rem;">3. Disappointments</h3>
+        <p style="font-size: 0.95rem;">Critical → Significant → Minor</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1.1rem;">4. What's Missing</h3>
+        <p style="font-size: 0.95rem;">"Why didn't you also…"</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1.1rem;">5. The Verdict</h3>
+        <p style="font-size: 0.95rem;">Usable? Needs revision?<br>Full redo?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Disappointments detail -->
+  <div class="slide center">
+    <div class="section-tag">The Core</div>
+    <h2>The Disappointments section<br>is where the <span class="accent">value</span> lives</h2>
+    <div style="max-width: 800px; width: 100%; text-align: left; margin-top: 1.5rem;">
+      <p style="margin-bottom: 1rem;">
+        <span class="severity critical">Critical</span>
+        "This is broken" — incorrect, incomplete, or unsuitable
+      </p>
+      <p style="margin-bottom: 1rem;">
+        <span class="severity significant">Significant</span>
+        "This is sloppy" — lacks thoroughness, missing edge cases
+      </p>
+      <p style="margin-bottom: 1rem;">
+        <span class="severity minor">Minor</span>
+        "This is lazy" — a variable named <code>x</code>, a paragraph that could be tighter
+      </p>
+      <p style="margin-top: 2rem; text-align: center;">
+        Each issue: <span class="accent">what's wrong</span> → <span class="accent">why it matters</span> → <span class="accent">how to fix it</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Sub-Agent -->
+  <div class="slide center">
+    <div class="section-tag">Architecture</div>
+    <h2>The <span class="accent">sub-agent</span> variant</h2>
+    <div class="columns" style="margin-top: 2rem;">
+      <div class="card">
+        <h3>Isolation by design</h3>
+        <ul>
+          <li>Evaluates in isolation — can't see the builder's reasoning</li>
+          <li>Receives only the work product + original task context</li>
+          <li>Returns a report card and nothing else</li>
+        </ul>
+        <blockquote style="font-size: 1rem; margin-top: 1.5rem; border-left-width: 2px;">
+          "A critic who heard the excuses would be a softer critic."
+        </blockquote>
+      </div>
+      <div class="card">
+        <h3>Progress Report Card</h3>
+        <ul>
+          <li>Subject-by-subject letter grades (A–F)</li>
+          <li>Adapts subjects to output type</li>
+          <li>Teacher's comments section</li>
+          <li>Conduct rating</li>
+          <li>Fridge Status: <span class="dim">□ Fridge-worthy ■ Stays in the backpack</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Report Card Preview -->
+  <div class="slide center">
+    <div class="section-tag">Report Card Format</div>
+    <div class="report-card"><span class="hl">╔══════════════════════════════════════════════════════╗</span>
+<span class="hl">║</span>              <span class="hl">PROGRESS REPORT CARD</span>                  <span class="hl">║</span>
+<span class="hl">║</span>                                                      <span class="hl">║</span>
+<span class="hl">║</span>  Student: Your Code                                  <span class="hl">║</span>
+<span class="hl">║</span>  Class:   API Development 401                        <span class="hl">║</span>
+<span class="hl">║</span>  Teacher: Mrs. Evaluator                              <span class="hl">║</span>
+<span class="hl">╚══════════════════════════════════════════════════════╝</span>
+
+Subject              Grade    Remarks
+──────────────────── ──────── ──────────────────────────
+Correctness          <span class="grade">B+</span>       Works, but only for the happy path
+Error Handling       <span class="grade">C</span>        "What errors?" is not a strategy
+Security             <span class="grade">B</span>        Input validation is... optional?
+Testing              <span class="grade">D</span>        One test. One. Test.
+
+OVERALL GRADE: <span class="grade">B- (84/100)</span>
+
+CONDUCT: <span class="hl">Needs Improvement</span>
+FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
+  </div>
+
+  <!-- SLIDE 11: Tone -->
+  <div class="slide center">
+    <div class="section-tag">Tone</div>
+    <h2>The key <span class="accent">calibration</span></h2>
+    <div style="max-width: 700px; text-align: left; margin-top: 1.5rem;">
+      <blockquote style="margin-bottom: 2rem;">
+        "The comedy comes from the <em>contrast</em> between genuine quality
+        and the impossibly high bar of the reaction. A solid B+ getting treated
+        like a crisis is funny. Actual bad work getting roasted is just mean."
+      </blockquote>
+      <ul>
+        <li>Every criticism must be substantive and actionable</li>
+        <li>Never cruel about things an agent can't control</li>
+        <li>Tough love is still love</li>
+        <li>The disappointment is universal — every culture has a version of it</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Closing -->
+  <div class="slide center">
+    <div class="emoji">🐯</div>
+    <h2 style="margin-bottom: 2rem;">Tiger Parent Evaluator</h2>
+    <blockquote>
+      "Excellence is not a destination. It is a continuous journey
+      that never ends. Also, your variable names are terrible."
+    </blockquote>
+    <p style="margin-top: 3rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-dim);">
+      github.com/inosaint/tiger-parent-eval
+    </p>
+  </div>
+</div>
+
+<div class="slide-number" id="slideNum"></div>
+<div class="key-hint"><kbd>←</kbd> <kbd>→</kbd> or click to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const slideNum = document.getElementById('slideNum');
+  let current = 0;
+
+  function show(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    slideNum.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'Backspace') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+
+  document.addEventListener('click', e => {
+    if (e.clientX > window.innerWidth / 2) show(current + 1);
+    else show(current - 1);
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) dx > 0 ? show(current - 1) : show(current + 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>
