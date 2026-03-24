@@ -7,6 +7,17 @@ description: Orchestrates a two-stage evaluation pipeline. First, the teacher-ev
 
 This is a two-stage evaluation pipeline, not a single prompt.
 
+```mermaid
+flowchart LR
+    A["🤖 Agent Output"] --> B["📝 Teacher Evaluator"]
+    B --> C["📋 Report Card"]
+    C --> D["🐯 Tiger Parent"]
+    A --> D
+    D --> E["😤 Harsh Feedback"]
+    E --> F["🤖 Agent Improves"]
+    F -.->|re-eval| B
+```
+
 ## Pipeline
 
 ### Stage 1: Teacher Evaluation
