@@ -308,6 +308,94 @@
     padding: 0.1rem 0.4rem;
     font-size: 0.7rem;
   }
+
+  /* Jargon table */
+  .jargon-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    font-size: clamp(0.85rem, 1.6vw, 1.15rem);
+  }
+
+  .jargon-table th {
+    text-align: left;
+    padding: 0.6rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    border-bottom: 2px solid var(--surface2);
+  }
+
+  .jargon-table th:first-child { color: var(--green); }
+  .jargon-table th:last-child { color: var(--accent); }
+
+  .jargon-table td {
+    padding: 0.5rem 1.2rem;
+    border-bottom: 1px solid var(--surface2);
+    color: var(--text);
+  }
+
+  .jargon-table td:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    font-size: 0.95em;
+  }
+
+  .jargon-table tr:last-child td { border-bottom: none; }
+
+  /* Meme placeholder */
+  .meme-placeholder {
+    background: var(--surface);
+    border: 2px dashed var(--surface2);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-style: italic;
+    max-width: 400px;
+    margin-top: 1.5rem;
+  }
+
+  .meme-placeholder .icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Comparison cards */
+  .vs-card {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 12px;
+    padding: 1.8rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    position: relative;
+  }
+
+  .vs-badge {
+    position: absolute;
+    top: -0.7rem;
+    left: 1.5rem;
+    background: var(--accent);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .big-quote {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.4;
+    max-width: 55ch;
+    text-align: center;
+  }
+
+  .big-quote .accent { font-style: normal; }
 </style>
 </head>
 <body>
@@ -323,53 +411,184 @@
     </p>
   </div>
 
-  <!-- SLIDE 2: The Problem -->
+  <!-- SLIDE 2: Opening Joke -->
   <div class="slide center">
-    <div class="section-tag">The Problem</div>
-    <h2>Agents produce output.<br>But who <span class="accent">reviews</span> it?</h2>
-    <p class="big-text" style="margin-top: 1.5rem;">
-      LLMs are confident by default. They'll hand you a result and move on.<br>
-      Most output lives in the gap between <span class="accent">"it works"</span> and <span class="accent">"it's right."</span>
-    </p>
-  </div>
-
-  <!-- SLIDE 3: The Idea -->
-  <div class="slide center">
-    <div class="section-tag">The Idea</div>
-    <h2>What if the reviewer had<br><span class="accent">impossibly high standards?</span></h2>
-    <blockquote style="margin-top: 2rem;">
-      "A 99 is not a 100. 'Pretty good' is not good enough.
-      'It works' is the bare minimum, not the finish line."
-    </blockquote>
-  </div>
-
-  <!-- SLIDE 4: Why Comedy -->
-  <div class="slide center">
-    <div class="section-tag">Why Comedy?</div>
-    <h2>The humor serves the <span class="accent">critique</span></h2>
-    <div class="columns" style="margin-top: 2rem;">
-      <div class="card">
-        <h3 class="green">What it is</h3>
-        <ul>
-          <li>Actionable, substantive feedback</li>
-          <li>Comedy to make critique memorable</li>
-          <li>Cultural humor that's universal</li>
-          <li>High standards as a quality tool</li>
-        </ul>
+    <h2>Is your Claude <span class="accent">scared</span><br>of their parent?</h2>
+    <div class="columns" style="margin-top: 2rem; align-items: center;">
+      <div class="meme-placeholder">
+        <div class="icon">🖼️</div>
+        [ insert meme here ]
       </div>
-      <div class="card">
-        <h3 class="red">What it isn't</h3>
-        <ul>
-          <li>A persona or character roleplay</li>
-          <li>Arbitrary cruelty</li>
-          <li>Padding with fake issues</li>
-          <li>Roasting genuinely bad work</li>
-        </ul>
-      </div>
+      <div class="report-card" style="font-size: clamp(0.65rem, 1.2vw, 0.85rem); max-width: 380px; padding: 1.2rem 1.5rem;">OVERALL GRADE: <span class="grade">72/100</span>
+
+TEACHER'S COMMENTS:
+<span class="hl">"It works. That's all you have to say</span>
+<span class="hl"> for yourself? It works?"</span>
+
+FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
     </div>
   </div>
 
-  <!-- SLIDE 5: The Grading Scale -->
+  <!-- SLIDE 3: Origin Story -->
+  <div class="slide center">
+    <div class="section-tag">Origin Story</div>
+    <h2>This started as a <span class="accent">joke</span></h2>
+    <p class="big-text" style="margin-top: 1.5rem; max-width: 55ch;">
+      I made a tiger parent that roasts Claude's output.<br><br>
+      Then I actually ran it on a plan I was about to ship&hellip;
+      and it caught <span class="accent">three things I completely missed.</span>
+    </p>
+    <p style="margin-top: 2rem; font-style: italic;">
+      Not because I'm bad at my job — because nobody catches everything on the first pass.
+    </p>
+  </div>
+
+  <!-- SLIDE 4: Demystify the Jargon -->
+  <div class="slide center">
+    <div class="section-tag">Let's Be Honest</div>
+    <h2>AI terminology is<br><span class="accent">overengineered</span></h2>
+    <table class="jargon-table" style="margin-top: 1.5rem;">
+      <tr><th>What it actually is</th><th>What AI calls it</th></tr>
+      <tr><td>A prompt</td><td>An "agent"</td></tr>
+      <tr><td>A prompt template</td><td>A "skill"</td></tr>
+      <tr><td>if/else logic</td><td>"Orchestration"</td></tr>
+      <tr><td>A for loop</td><td>An "agentic loop"</td></tr>
+      <tr><td>Search, then ask</td><td>"RAG"</td></tr>
+      <tr><td>"You are a helpful assistant"</td><td>A "system persona"</td></tr>
+      <tr><td>Calling a function</td><td>"Tool use"</td></tr>
+      <tr><td>Chaining two prompts</td><td>A "workflow" / "pipeline"</td></tr>
+    </table>
+    <p style="margin-top: 1.5rem; font-style: italic; max-width: 60ch;">
+      Strip away the jargon and you realize — most of this is just software engineering
+      with a probabilistic function call in the middle.
+    </p>
+  </div>
+
+  <!-- SLIDE 5: What Are Evals -->
+  <div class="slide center">
+    <div class="section-tag">Evals</div>
+    <h2>What are evals?<br><span class="accent">Just checking the homework.</span></h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; width: 100%; margin-top: 2rem;">
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1rem;">Automated</h3>
+        <p style="font-size: 0.95rem;">Test suites, linters,<br>rubric-based graders</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1rem;">Human</h3>
+        <p style="font-size: 0.95rem;">You reading the output<br>critically</p>
+      </div>
+      <div class="card" style="text-align: center;">
+        <h3 style="font-size: 1rem;">LLM-as-Judge</h3>
+        <p style="font-size: 0.95rem;">Another AI reviewing<br>the first AI's work</p>
+      </div>
+    </div>
+    <p style="margin-top: 2rem; max-width: 55ch;">
+      A skill is a <span class="accent">recipe</span>. LLM-as-judge is the <span class="accent">technique</span>.
+      The tiger parent is a recipe that tells Claude exactly how to judge your work.
+    </p>
+  </div>
+
+  <!-- SLIDE 6: The Key Insight -->
+  <div class="slide center">
+    <div class="section-tag">The Key Insight</div>
+    <p class="big-quote">
+      You don't need to be an expert<br>to catch problems — you just need<br>a good <span class="accent">evaluator.</span>
+    </p>
+    <div style="margin-top: 2.5rem; max-width: 700px; text-align: left;">
+      <div class="flow-steps" style="justify-content: flex-start; gap: 0.5rem;">
+        <div style="font-family: 'JetBrains Mono', monospace; color: var(--text-dim); font-size: clamp(0.85rem, 1.5vw, 1.1rem); line-height: 2.2;">
+          <span class="accent">1.</span> You ask Claude to make a plan<br>
+          <span class="accent">2.</span> You're not sure if it's good<br>
+          <span class="accent">3.</span> Tiger parent evaluates it: <em>"No rate limiting. No tests. 68/100."</em><br>
+          <span class="accent">4.</span> Now you know what to ask for next
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 2rem; font-style: italic;">
+      It turns "I don't know what I don't know" into a <span class="accent">concrete punch list.</span>
+    </p>
+  </div>
+
+  <!-- SLIDE 7: The Gap -->
+  <div class="slide center">
+    <div class="section-tag">Why It Works</div>
+    <h2>Different instructions,<br>different <span class="accent">questions</span></h2>
+    <div class="columns" style="margin-top: 2rem;">
+      <div class="vs-card">
+        <div class="vs-badge">The Planner</div>
+        <p style="margin-top: 0.5rem; font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--text);">
+          "What did the user ask for?<br>Let me address that."
+        </p>
+        <p style="margin-top: 1rem;">
+          Your prompt says <span class="accent">"build me an API."</span><br>
+          The plan builds you an API.
+        </p>
+      </div>
+      <div class="vs-card">
+        <div class="vs-badge" style="background: var(--red);">The Evaluator</div>
+        <p style="margin-top: 0.5rem; font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--text);">
+          "Is there error handling? Security?<br>Edge cases? Testing? Performance?"
+        </p>
+        <p style="margin-top: 1rem;">
+          The tiger parent says <span class="accent">"where's the rate limiting, the auth, the error handling?"</span>
+        </p>
+      </div>
+    </div>
+    <p style="margin-top: 2rem;">
+      The gap between those two is where the <span class="accent">blind spots</span> live.
+    </p>
+  </div>
+
+  <!-- SLIDE 8: Skill vs Sub-Agent -->
+  <div class="slide center">
+    <div class="section-tag">Architecture</div>
+    <h2>Skill vs <span class="accent">sub-agent</span></h2>
+    <div class="columns" style="margin-top: 2rem;">
+      <div class="vs-card">
+        <div class="vs-badge" style="background: var(--blue);">Skill</div>
+        <h3 style="margin-top: 0.5rem;">Giving Claude a new hat</h3>
+        <ul>
+          <li>Same conversation, same context</li>
+          <li>Claude reads new instructions inline</li>
+          <li>Conversational — you can push back</li>
+          <li>Simpler, less overhead</li>
+        </ul>
+      </div>
+      <div class="vs-card">
+        <div class="vs-badge" style="background: var(--accent);">Sub-Agent</div>
+        <h3 style="margin-top: 0.5rem;">Hiring a contractor</h3>
+        <ul>
+          <li>Separate Claude instance, own context</li>
+          <li>Only sees the output, not the reasoning</li>
+          <li>Returns a verdict — no negotiation</li>
+          <li>Can run multiple in parallel</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top: 2rem; font-style: italic; max-width: 55ch;">
+      "A sub-agent sounds fancy. It's just: run the same LLM twice with different prompts."
+    </p>
+  </div>
+
+  <!-- SLIDE 9: No Talking Back -->
+  <div class="slide center">
+    <div class="section-tag">The Architecture Is Cultural</div>
+    <h2>The builder doesn't get to<br><span class="accent">argue back</span></h2>
+    <blockquote style="margin-top: 2rem; max-width: 50ch;">
+      "If you grew up with a tiger parent, you know — you don't talk back.
+      You take the feedback, you fix it, and you come back with a better version."
+    </blockquote>
+    <p class="big-text" style="margin-top: 2rem; max-width: 55ch;">
+      That's literally what this eval does. Claude submits its plan,
+      the tiger parent tears it apart, and Claude doesn't get to say
+      <span class="accent">"but I thought—"</span>. It just goes back and does better.
+    </p>
+    <p style="margin-top: 1.5rem; font-style: italic;">
+      The power dynamic is one-directional by design.
+    </p>
+  </div>
+
+  <!-- SLIDE 10: The Grading Scale -->
   <div class="slide center">
     <div class="section-tag">Grading Scale</div>
     <h2>Every grade is a <span class="accent">disappointment</span></h2>
@@ -398,35 +617,7 @@
     <p style="margin-top: 1.5rem; font-style: italic;">"A 100 is theoretically possible. You've never seen one."</p>
   </div>
 
-  <!-- SLIDE 6: Evaluation Process -->
-  <div class="slide center">
-    <div class="section-tag">How It Works</div>
-    <h2>The evaluation <span class="accent">process</span></h2>
-    <div class="flow-steps" style="margin-top: 2rem;">
-      <div class="flow-step">
-        <div class="num">1</div>
-        <div class="label">Identify<br>output type</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="num">2</div>
-        <div class="label">Full scan<br>(read everything)</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="num">3</div>
-        <div class="label">Structured<br>evaluation</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step">
-        <div class="num">4</div>
-        <div class="label">Iterate<br>(re-run & review)</div>
-      </div>
-    </div>
-    <p style="margin-top: 2rem;">Adapts criteria to output type: <span class="accent">code</span>, <span class="accent">documents</span>, <span class="accent">data analysis</span>, <span class="accent">general</span></p>
-  </div>
-
-  <!-- SLIDE 7: Five Sections -->
+  <!-- SLIDE 11: Five Sections -->
   <div class="slide center">
     <div class="section-tag">Output Format</div>
     <h2>Five sections. <span class="accent">Every time.</span></h2>
@@ -454,59 +645,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 8: Disappointments detail -->
-  <div class="slide center">
-    <div class="section-tag">The Core</div>
-    <h2>The Disappointments section<br>is where the <span class="accent">value</span> lives</h2>
-    <div style="max-width: 800px; width: 100%; text-align: left; margin-top: 1.5rem;">
-      <p style="margin-bottom: 1rem;">
-        <span class="severity critical">Critical</span>
-        "This is broken" — incorrect, incomplete, or unsuitable
-      </p>
-      <p style="margin-bottom: 1rem;">
-        <span class="severity significant">Significant</span>
-        "This is sloppy" — lacks thoroughness, missing edge cases
-      </p>
-      <p style="margin-bottom: 1rem;">
-        <span class="severity minor">Minor</span>
-        "This is lazy" — a variable named <code>x</code>, a paragraph that could be tighter
-      </p>
-      <p style="margin-top: 2rem; text-align: center;">
-        Each issue: <span class="accent">what's wrong</span> → <span class="accent">why it matters</span> → <span class="accent">how to fix it</span>
-      </p>
-    </div>
-  </div>
-
-  <!-- SLIDE 9: Sub-Agent -->
-  <div class="slide center">
-    <div class="section-tag">Architecture</div>
-    <h2>The <span class="accent">sub-agent</span> variant</h2>
-    <div class="columns" style="margin-top: 2rem;">
-      <div class="card">
-        <h3>Isolation by design</h3>
-        <ul>
-          <li>Evaluates in isolation — can't see the builder's reasoning</li>
-          <li>Receives only the work product + original task context</li>
-          <li>Returns a report card and nothing else</li>
-        </ul>
-        <blockquote style="font-size: 1rem; margin-top: 1.5rem; border-left-width: 2px;">
-          "A critic who heard the excuses would be a softer critic."
-        </blockquote>
-      </div>
-      <div class="card">
-        <h3>Progress Report Card</h3>
-        <ul>
-          <li>Subject-by-subject letter grades (A–F)</li>
-          <li>Adapts subjects to output type</li>
-          <li>Teacher's comments section</li>
-          <li>Conduct rating</li>
-          <li>Fridge Status: <span class="dim">□ Fridge-worthy ■ Stays in the backpack</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 10: Report Card Preview -->
+  <!-- SLIDE 12: Report Card Preview -->
   <div class="slide center">
     <div class="section-tag">Report Card Format</div>
     <div class="report-card"><span class="hl">╔══════════════════════════════════════════════════════╗</span>
@@ -530,7 +669,7 @@ CONDUCT: <span class="hl">Needs Improvement</span>
 FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
   </div>
 
-  <!-- SLIDE 11: Tone -->
+  <!-- SLIDE 13: Tone -->
   <div class="slide center">
     <div class="section-tag">Tone</div>
     <h2>The key <span class="accent">calibration</span></h2>
@@ -549,7 +688,49 @@ FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
     </div>
   </div>
 
-  <!-- SLIDE 12: Closing -->
+  <!-- SLIDE 14: Log Kya Kahenge -->
+  <div class="slide center">
+    <div class="section-tag">The Cultural Layer</div>
+    <h2 style="font-style: italic;">"Log kya kahenge?"</h2>
+    <p class="big-text" style="margin-top: 0.5rem; margin-bottom: 2rem; color: var(--text-dim);">
+      (What will people say?)
+    </p>
+    <blockquote style="max-width: 50ch;">
+      "Did you consider how other developers will read this code?
+      What about the next team that maintains it?"
+    </blockquote>
+    <p style="margin-top: 2.5rem; max-width: 50ch;">
+      You get a 95, they ask about the other 5. Your plan handles auth, error handling, and testing?<br>
+      <span class="accent">"Where's the rate limiting? The caching strategy? Why didn't you consider observability?"</span>
+    </p>
+    <p style="margin-top: 1.5rem; font-style: italic;">
+      You will never get a perfect score. And that's the point —
+      because in production, nothing is ever perfect either.
+    </p>
+  </div>
+
+  <!-- SLIDE 15: Narrative Arc -->
+  <div class="slide center">
+    <div class="section-tag">Takeaway</div>
+    <h2>The <span class="accent">arc</span></h2>
+    <div style="max-width: 700px; width: 100%; margin-top: 2rem;">
+      <div style="display: grid; grid-template-columns: auto 1fr; gap: 0.75rem 1.5rem; font-size: clamp(1rem, 1.8vw, 1.3rem); align-items: baseline;">
+        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">01</span>
+        <span><strong>Demystify the jargon</strong> <span class="dim">— it's just prompts, not magic</span></span>
+
+        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">02</span>
+        <span><strong>The architecture</strong> <span class="dim">— two Claudes, different jobs, builder and critic</span></span>
+
+        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">03</span>
+        <span><strong>The cultural metaphor</strong> <span class="dim">— tiger parent, no talking back, impossibly high standards</span></span>
+
+        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">04</span>
+        <span><strong>The payoff</strong> <span class="dim">— it surfaces the gaps you didn't know to ask about</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: Closing -->
   <div class="slide center">
     <div class="emoji">🐯</div>
     <h2 style="margin-bottom: 2rem;">Tiger Parent Evaluator</h2>
