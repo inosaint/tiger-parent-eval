@@ -396,6 +396,113 @@
   }
 
   .big-quote .accent { font-style: normal; }
+
+  /* Astronaut meme scene */
+  .meme-scene {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .earth-bg {
+    position: absolute;
+    font-size: clamp(8rem, 18vw, 14rem);
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.15;
+    z-index: 0;
+    filter: grayscale(0.3);
+  }
+
+  .astronaut {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .astronaut-left { left: 12%; bottom: 0; }
+  .astronaut-right { right: 12%; bottom: 0; }
+
+  .astronaut-helmet {
+    width: 70px;
+    height: 70px;
+    background: #E8E0D8;
+    border-radius: 50%;
+    border: 3px solid #C0B8AE;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .astronaut-visor {
+    position: absolute;
+    top: 18px;
+    left: 12px;
+    width: 46px;
+    height: 32px;
+    background: linear-gradient(135deg, #D4763C 0%, #B8613A 60%, #1A1612 100%);
+    border-radius: 8px;
+    opacity: 0.85;
+  }
+
+  .astronaut-body {
+    width: 56px;
+    height: 70px;
+    background: #E8E0D8;
+    border: 3px solid #C0B8AE;
+    border-radius: 14px 14px 18px 18px;
+    margin-top: -4px;
+  }
+
+  .astronaut-gun {
+    position: absolute;
+    left: -30px;
+    top: 80px;
+    font-size: 1.8rem;
+    transform: scaleX(-1);
+  }
+
+  .speech-bubble {
+    position: absolute;
+    background: var(--surface);
+    border: 2px solid var(--surface2);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    line-height: 1.4;
+    color: var(--text);
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--surface);
+  }
+
+  .speech-left {
+    top: -70px;
+    left: -20px;
+  }
+  .speech-left::after { left: 30px; }
+
+  .speech-right {
+    top: -50px;
+    right: -20px;
+  }
+  .speech-right::after { right: 30px; }
 </style>
 </head>
 <body>
@@ -461,6 +568,38 @@ FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
     <p style="margin-top: 1.5rem; font-style: italic; max-width: 60ch;">
       Strip away the jargon and you realize — most of this is just software engineering
       with a probabilistic function call in the middle.
+    </p>
+  </div>
+
+  <!-- SLIDE 4b: Always Has Been Meme -->
+  <div class="slide center">
+    <div class="section-tag">The Reveal</div>
+    <h2 style="margin-bottom: 2rem;">Wait, it's all just <span class="accent">prompts?</span></h2>
+    <div class="meme-scene">
+      <div class="astronaut astronaut-left">
+        <div class="astronaut-helmet">
+          <div class="astronaut-visor"></div>
+        </div>
+        <div class="astronaut-body"></div>
+        <div class="speech-bubble speech-left">
+          Wait&hellip; an "agent" is<br>just a <span class="accent">prompt</span>?
+        </div>
+      </div>
+      <div class="astronaut astronaut-right">
+        <div class="astronaut-helmet">
+          <div class="astronaut-visor"></div>
+        </div>
+        <div class="astronaut-body"></div>
+        <div class="astronaut-gun">🔫</div>
+        <div class="speech-bubble speech-right">
+          <strong>Always has been.</strong>
+        </div>
+      </div>
+      <div class="earth-bg">🌍</div>
+    </div>
+    <p style="margin-top: 2rem; font-style: italic; max-width: 50ch;">
+      A "skill" is a template. An "agent" is a prompt.<br>
+      The rest is <span class="accent">software engineering.</span>
     </p>
   </div>
 
