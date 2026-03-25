@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiger Parent Evaluator — Talk</title>
+<title>Is Claude Scared of Their Parent?</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,400;1,8..60,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
 
@@ -55,6 +55,7 @@
     opacity: 1;
   }
 
+  /* Progress & nav */
   .slide-number {
     position: fixed;
     bottom: 2vh;
@@ -73,6 +74,24 @@
     background: var(--accent);
     transition: width 0.4s ease;
     z-index: 100;
+  }
+
+  .key-hint {
+    position: fixed;
+    bottom: 2vh;
+    left: 3vw;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #C0B8AE;
+    z-index: 100;
+  }
+
+  .key-hint kbd {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.7rem;
   }
 
   /* Typography */
@@ -113,33 +132,91 @@
     color: var(--text);
     line-height: 1.5;
     max-width: 70ch;
-    text-align: center;
   }
 
   .accent { color: var(--accent); }
   .red { color: var(--red); }
   .green { color: var(--green); }
-  .yellow { color: var(--yellow); }
   .dim { color: var(--text-dim); }
 
-  .emoji {
-    font-size: clamp(3rem, 8vw, 6rem);
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Two-column image layout */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    width: 100%;
+    max-width: 1200px;
+    align-items: center;
+  }
+
+  .split-text {
+    text-align: left;
+  }
+
+  .split-text h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .split-text p {
     margin-bottom: 1rem;
   }
 
-  /* Layout helpers */
+  .split-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .split-image img {
+    max-width: 100%;
+    max-height: 65vh;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Image placeholder for missing images */
+  .image-needed {
+    background: var(--surface);
+    border: 2px dashed var(--surface2);
+    border-radius: 10px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 0.95rem;
+    max-width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  .image-needed .prompt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-style: normal;
+  }
+
+  /* Center layout helper */
   .center { text-align: center; align-items: center; }
   .left { text-align: left; align-items: flex-start; }
 
-  .columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4vw;
-    width: 100%;
-    max-width: 1200px;
-    align-items: start;
-  }
-
+  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--surface2);
@@ -148,12 +225,41 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
-  .card h3 { margin-bottom: 0.75rem; }
-
-  ul {
-    list-style: none;
-    padding: 0;
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3vw;
+    width: 100%;
+    max-width: 1100px;
+    align-items: start;
   }
+
+  /* VS cards */
+  .vs-card {
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-radius: 12px;
+    padding: 1.8rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    position: relative;
+  }
+
+  .vs-badge {
+    position: absolute;
+    top: -0.7rem;
+    left: 1.5rem;
+    background: var(--accent);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  ul { list-style: none; padding: 0; }
 
   ul li {
     padding: 0.4rem 0;
@@ -168,145 +274,6 @@
     color: var(--accent);
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
-  }
-
-  /* Grade table */
-  .grade-table {
-    width: 100%;
-    max-width: 1000px;
-    border-collapse: collapse;
-    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
-  }
-
-  .grade-table th {
-    text-align: left;
-    padding: 0.75rem 1.5rem;
-    color: var(--accent);
-    border-bottom: 2px solid var(--surface2);
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-  }
-
-  .grade-table td {
-    padding: 0.75rem 1.5rem;
-    border-bottom: 1px solid var(--surface2);
-    color: var(--text);
-  }
-
-  .grade-table tr:last-child td { border-bottom: none; }
-
-  .grade-table .score { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
-
-  /* Code/report card block */
-  .report-card {
-    background: #1A1612;
-    border: 1px solid #2A2420;
-    border-radius: 12px;
-    padding: 2rem 2.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.7rem, 1.4vw, 1rem);
-    line-height: 1.7;
-    color: #BDB0A4;
-    max-width: 750px;
-    width: 100%;
-    white-space: pre;
-    overflow-x: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  }
-
-  .report-card .hl { color: var(--accent); }
-  .report-card .grade { color: #E8A84C; font-weight: 600; }
-
-  /* Quote */
-  blockquote {
-    border-left: 3px solid var(--accent);
-    padding-left: 1.5rem;
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-style: italic;
-    color: var(--text);
-    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-    max-width: 60ch;
-    line-height: 1.5;
-  }
-
-  /* Section labels */
-  .section-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--accent-dim);
-    margin-bottom: 1.5rem;
-  }
-
-  /* Severity badges */
-  .severity {
-    display: inline-block;
-    padding: 0.2rem 0.75rem;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-right: 0.5rem;
-  }
-  .severity.critical { background: #C0392B18; color: var(--red); }
-  .severity.significant { background: #B8860B18; color: var(--yellow); }
-  .severity.minor { background: #4A6FA518; color: var(--blue); }
-
-  .flow-steps {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-
-  .flow-step {
-    background: var(--surface);
-    border: 1px solid var(--surface2);
-    border-radius: 10px;
-    padding: 1.2rem 1.8rem;
-    text-align: center;
-    min-width: 160px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  }
-
-  .flow-step .num {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--accent);
-    font-size: 1.5rem;
-    font-weight: 800;
-  }
-
-  .flow-step .label {
-    font-size: 1rem;
-    color: var(--text-dim);
-    margin-top: 0.3rem;
-  }
-
-  .flow-arrow {
-    font-size: 1.5rem;
-    color: var(--text-dim);
-  }
-
-  /* Keyboard hint */
-  .key-hint {
-    position: fixed;
-    bottom: 2vh;
-    left: 3vw;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #C0B8AE;
-    z-index: 100;
-  }
-
-  .key-hint kbd {
-    background: var(--surface);
-    border: 1px solid var(--surface2);
-    border-radius: 3px;
-    padding: 0.1rem 0.4rem;
-    font-size: 0.7rem;
   }
 
   /* Jargon table */
@@ -342,345 +309,242 @@
 
   .jargon-table tr:last-child td { border-bottom: none; }
 
-  /* Meme placeholder */
-  .meme-placeholder {
-    background: var(--surface);
-    border: 2px dashed var(--surface2);
-    border-radius: 12px;
-    padding: 3rem 2rem;
-    text-align: center;
-    color: var(--text-dim);
-    font-style: italic;
-    max-width: 400px;
-    margin-top: 1.5rem;
-  }
-
-  .meme-placeholder .icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  /* Comparison cards */
-  .vs-card {
-    background: var(--surface);
-    border: 1px solid var(--surface2);
-    border-radius: 12px;
-    padding: 1.8rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    position: relative;
-  }
-
-  .vs-badge {
-    position: absolute;
-    top: -0.7rem;
-    left: 1.5rem;
-    background: var(--accent);
-    color: white;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.15rem 0.6rem;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .big-quote {
+  /* Quote */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1.5rem;
     font-family: 'Source Serif 4', Georgia, serif;
-    font-size: clamp(1.5rem, 3vw, 2.4rem);
     font-style: italic;
     color: var(--text);
-    line-height: 1.4;
-    max-width: 55ch;
-    text-align: center;
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+    max-width: 60ch;
+    line-height: 1.5;
   }
-
-  .big-quote .accent { font-style: normal; }
-
-  /* Astronaut meme scene */
-  .meme-scene {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
-    height: 320px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-  }
-
-  .earth-bg {
-    position: absolute;
-    font-size: clamp(8rem, 18vw, 14rem);
-    bottom: -2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.15;
-    z-index: 0;
-    filter: grayscale(0.3);
-  }
-
-  .astronaut {
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .astronaut-left { left: 12%; bottom: 0; }
-  .astronaut-right { right: 12%; bottom: 0; }
-
-  .astronaut-helmet {
-    width: 70px;
-    height: 70px;
-    background: #E8E0D8;
-    border-radius: 50%;
-    border: 3px solid #C0B8AE;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .astronaut-visor {
-    position: absolute;
-    top: 18px;
-    left: 12px;
-    width: 46px;
-    height: 32px;
-    background: linear-gradient(135deg, #D4763C 0%, #B8613A 60%, #1A1612 100%);
-    border-radius: 8px;
-    opacity: 0.85;
-  }
-
-  .astronaut-body {
-    width: 56px;
-    height: 70px;
-    background: #E8E0D8;
-    border: 3px solid #C0B8AE;
-    border-radius: 14px 14px 18px 18px;
-    margin-top: -4px;
-  }
-
-  .astronaut-gun {
-    position: absolute;
-    left: -30px;
-    top: 80px;
-    font-size: 1.8rem;
-    transform: scaleX(-1);
-  }
-
-  .speech-bubble {
-    position: absolute;
-    background: var(--surface);
-    border: 2px solid var(--surface2);
-    border-radius: 12px;
-    padding: 0.8rem 1.2rem;
-    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
-    line-height: 1.4;
-    color: var(--text);
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-
-  .speech-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--surface);
-  }
-
-  .speech-left {
-    top: -70px;
-    left: -20px;
-  }
-  .speech-left::after { left: 30px; }
-
-  .speech-right {
-    top: -50px;
-    right: -20px;
-  }
-  .speech-right::after { right: 30px; }
 </style>
 </head>
 <body>
 <div class="deck" id="deck">
   <div class="progress-bar" id="progress"></div>
 
-  <!-- SLIDE 1: Title -->
-  <div class="slide center active">
-    <div class="emoji">🐯</div>
-    <h1>Tiger Parent<br><span class="accent">Evaluator</span></h1>
-    <p style="font-size: clamp(1rem, 2vw, 1.4rem); margin-top: 1rem;">
-      A skill for reviewing agent output with<br>impossibly high standards
-    </p>
-  </div>
-
-  <!-- SLIDE 2: Opening Joke -->
-  <div class="slide center">
-    <h2>Is your Claude <span class="accent">scared</span><br>of their parent?</h2>
-    <div class="columns" style="margin-top: 2rem; align-items: center;">
-      <div class="meme-placeholder">
-        <div class="icon">🖼️</div>
-        [ insert meme here ]
+  <!-- ============================================================
+       SLIDE 1: Title
+       ============================================================ -->
+  <div class="slide active">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-tag">Skill Talk</div>
+        <h1>Is Claude <span class="accent">scared</span> of their parent?</h1>
+        <p style="margin-top: 1rem; font-size: clamp(1rem, 2vw, 1.3rem);">
+          A story about building a joke eval, and accidentally learning
+          what all the AI jargon actually means.
+        </p>
       </div>
-      <div class="report-card" style="font-size: clamp(0.65rem, 1.2vw, 0.85rem); max-width: 380px; padding: 1.2rem 1.5rem;">OVERALL GRADE: <span class="grade">72/100</span>
-
-TEACHER'S COMMENTS:
-<span class="hl">"It works. That's all you have to say</span>
-<span class="hl"> for yourself? It works?"</span>
-
-FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
+      <div class="split-image">
+        <img src="parent-unhappy.webp" alt="Asian parent grading scale meme">
+      </div>
     </div>
   </div>
 
-  <!-- SLIDE 3: Origin Story -->
-  <div class="slide center">
-    <div class="section-tag">Origin Story</div>
-    <h2>This started as a <span class="accent">joke</span></h2>
-    <p class="big-text" style="margin-top: 1.5rem; max-width: 55ch;">
-      I made a tiger parent that roasts Claude's output.<br><br>
-      Then I actually ran it on a plan I was about to ship&hellip;
-      and it caught <span class="accent">three things I completely missed.</span>
-    </p>
-    <p style="margin-top: 2rem; font-style: italic;">
-      Not because I'm bad at my job — because nobody catches everything on the first pass.
-    </p>
+  <!-- ============================================================
+       SLIDE 2: Manas' tweet - the spark
+       ============================================================
+       PRESENTER NOTE / IMAGE NEEDED:
+       Screenshot of Manas Vaze's tweet:
+       https://x.com/manasvaze/status/2033821926997823852
+       "Give your agents some childhood trauma so they outperform"
+       Save as: presentation/manas-tweet.png
+       ============================================================ -->
+  <div class="slide">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-tag">The Spark</div>
+        <h2>It started with a <span class="accent">tweet</span></h2>
+        <p class="big-text" style="margin-top: 1rem;">
+          "Give your agents some childhood trauma so they outperform."
+        </p>
+        <p style="margin-top: 2rem;">
+          That landed differently for anyone who grew up with
+          <span class="accent">impossibly high standards</span> at home.
+        </p>
+      </div>
+      <div class="split-image">
+        <div class="image-needed">
+          <div class="prompt-label">Image needed</div>
+          Screenshot of @manasvaze tweet:<br>
+          "Give your agents some childhood trauma<br>so they outperform"<br><br>
+          <span style="font-size: 0.8rem;">
+            source: x.com/manasvaze/status/2033821926997823852
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- SLIDE 4: Demystify the Jargon -->
+  <!-- ============================================================
+       SLIDE 3: I made the skill
+       ============================================================ -->
+  <div class="slide">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-tag">The Response</div>
+        <h2>So I made a <span class="accent">tiger parent</span> eval</h2>
+        <p style="margin-top: 1rem;">
+          A markdown file that tells Claude to review any output through the
+          lens of impossibly high standards.
+        </p>
+        <p style="margin-top: 1.5rem;">
+          A 99 is not a 100. "Pretty good" is not good enough.
+          "It works" is the bare minimum, not the finish line.
+        </p>
+        <p style="margin-top: 1.5rem; font-style: italic;">
+          This was the first skill I ever created.
+        </p>
+      </div>
+      <div class="split-image">
+        <img src="tiger-parent.png" alt="tiger-parent-evaluator.md on GitHub">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SLIDE 4: Tried it, got real results
+       ============================================================ -->
+  <div class="slide">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-tag">The Surprise</div>
+        <h2>The next day, I tried it on a <span class="accent">real plan</span></h2>
+        <p style="margin-top: 1rem;">
+          I ran it against a plan I was about to ship.
+        </p>
+        <p style="margin-top: 1.5rem;">
+          It caught <span class="accent">three things I completely missed</span> &mdash;
+          not because I'm bad at my job, but because nobody catches everything
+          on the first pass.
+        </p>
+        <p style="margin-top: 1.5rem; font-style: italic;">
+          A joke eval that actually worked. That got me curious.
+        </p>
+      </div>
+      <div class="split-image">
+        <img src="toger-parent-eval.png" alt="Tiger parent eval results showing detailed critique">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SLIDE 5: Only used skills for simple tasks before
+       ============================================================ -->
+  <div class="slide">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-tag">Before This</div>
+        <h2>I'd only used skills for <span class="accent">simple things</span></h2>
+        <p style="margin-top: 1rem;">
+          Release planning. Changelog formatting. Functional stuff &mdash; things
+          with clear steps and predictable output.
+        </p>
+        <p style="margin-top: 1.5rem;">
+          The tiger parent was different. It wasn't a checklist &mdash;
+          it was a <span class="accent">perspective</span>. That made me want to
+          understand what skills actually are, and what all the jargon around
+          them means.
+        </p>
+      </div>
+      <div class="split-image">
+        <img src="release.png" alt="Release planning skill - a simple functional skill">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SLIDE 6: Jargon table
+       ============================================================
+       PRESENTER NOTE / IMAGE NEEDED:
+       Optionally show Karthik's tweet as a lead-in before this slide.
+       Screenshot of: https://x.com/karthiks/status/2032016699235713292
+       Save as: presentation/karthik-tweet.png
+       ============================================================ -->
   <div class="slide center">
-    <div class="section-tag">Let's Be Honest</div>
-    <h2>AI terminology is<br><span class="accent">overengineered</span></h2>
-    <table class="jargon-table" style="margin-top: 1.5rem;">
+    <div class="section-tag">The Jargon Problem</div>
+    <h2>There's a <span class="accent">lot</span> of terminology out there</h2>
+    <table class="jargon-table" style="margin-top: 2rem;">
       <tr><th>What it actually is</th><th>What AI calls it</th></tr>
       <tr><td>A prompt</td><td>An "agent"</td></tr>
       <tr><td>A prompt template</td><td>A "skill"</td></tr>
       <tr><td>if/else logic</td><td>"Orchestration"</td></tr>
       <tr><td>A for loop</td><td>An "agentic loop"</td></tr>
       <tr><td>Search, then ask</td><td>"RAG"</td></tr>
-      <tr><td>"You are a helpful assistant"</td><td>A "system persona"</td></tr>
       <tr><td>Calling a function</td><td>"Tool use"</td></tr>
-      <tr><td>Chaining two prompts</td><td>A "workflow" / "pipeline"</td></tr>
+      <tr><td>Chaining two prompts</td><td>A "pipeline"</td></tr>
     </table>
-    <p style="margin-top: 1.5rem; font-style: italic; max-width: 60ch;">
-      Strip away the jargon and you realize — most of this is just software engineering
-      with a probabilistic function call in the middle.
+    <p style="margin-top: 2rem; font-style: italic; max-width: 55ch;">
+      Strip away the jargon and you realize &mdash; most of this is just software
+      engineering with a probabilistic function call in the middle.
     </p>
   </div>
 
-  <!-- SLIDE 4b: Always Has Been Meme -->
-  <div class="slide center">
-    <div class="section-tag">The Reveal</div>
-    <h2 style="margin-bottom: 2rem;">Wait, it's all just <span class="accent">prompts?</span></h2>
-    <div class="meme-scene">
-      <div class="astronaut astronaut-left">
-        <div class="astronaut-helmet">
-          <div class="astronaut-visor"></div>
-        </div>
-        <div class="astronaut-body"></div>
-        <div class="speech-bubble speech-left">
-          Wait&hellip; an "agent" is<br>just a <span class="accent">prompt</span>?
-        </div>
-      </div>
-      <div class="astronaut astronaut-right">
-        <div class="astronaut-helmet">
-          <div class="astronaut-visor"></div>
-        </div>
-        <div class="astronaut-body"></div>
-        <div class="astronaut-gun">🔫</div>
-        <div class="speech-bubble speech-right">
-          <strong>Always has been.</strong>
-        </div>
-      </div>
-      <div class="earth-bg">🌍</div>
-    </div>
-    <p style="margin-top: 2rem; font-style: italic; max-width: 50ch;">
-      A "skill" is a template. An "agent" is a prompt.<br>
-      The rest is <span class="accent">software engineering.</span>
-    </p>
-  </div>
+  <!-- ============================================================
+       SLIDE 7: "Always has been" astronaut meme
+       ============================================================
+       PRESENTER NOTE / IMAGE NEEDED:
+       "Always has been" astronaut meme.
+       Astronaut 1 looking at Earth: 'Wait... an "agent" is just a prompt?'
+       Astronaut 2 with gun behind: 'Always has been.'
 
-  <!-- SLIDE 5: What Are Evals -->
-  <div class="slide center">
-    <div class="section-tag">Evals</div>
-    <h2>What are evals?<br><span class="accent">Just checking the homework.</span></h2>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; width: 100%; margin-top: 2rem;">
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1rem;">Automated</h3>
-        <p style="font-size: 0.95rem;">Test suites, linters,<br>rubric-based graders</p>
-      </div>
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1rem;">Human</h3>
-        <p style="font-size: 0.95rem;">You reading the output<br>critically</p>
-      </div>
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1rem;">LLM-as-Judge</h3>
-        <p style="font-size: 0.95rem;">Another AI reviewing<br>the first AI's work</p>
-      </div>
-    </div>
-    <p style="margin-top: 2rem; max-width: 55ch;">
-      A skill is a <span class="accent">recipe</span>. LLM-as-judge is the <span class="accent">technique</span>.
-      The tiger parent is a recipe that tells Claude exactly how to judge your work.
-    </p>
-  </div>
+       NanoBanana prompt: "Two astronauts floating in space with Earth
+       in the background. First astronaut in foreground looking shocked,
+       speech bubble: 'Wait, an agent is just a prompt?' Second astronaut
+       behind them pointing a gun, speech bubble: 'Always has been.'
+       Classic meme format, clean flat illustration style."
 
-  <!-- SLIDE 6: The Key Insight -->
-  <div class="slide center">
-    <div class="section-tag">The Key Insight</div>
-    <p class="big-quote">
-      You don't need to be an expert<br>to catch problems — you just need<br>a good <span class="accent">evaluator.</span>
-    </p>
-    <div style="margin-top: 2.5rem; max-width: 700px; text-align: left;">
-      <div class="flow-steps" style="justify-content: flex-start; gap: 0.5rem;">
-        <div style="font-family: 'JetBrains Mono', monospace; color: var(--text-dim); font-size: clamp(0.85rem, 1.5vw, 1.1rem); line-height: 2.2;">
-          <span class="accent">1.</span> You ask Claude to make a plan<br>
-          <span class="accent">2.</span> You're not sure if it's good<br>
-          <span class="accent">3.</span> Tiger parent evaluates it: <em>"No rate limiting. No tests. 68/100."</em><br>
-          <span class="accent">4.</span> Now you know what to ask for next
+       Save as: presentation/always-has-been.png
+       ============================================================ -->
+  <div class="slide">
+    <div class="split">
+      <div class="split-text" style="display: flex; flex-direction: column; justify-content: center;">
+        <h2 style="margin-bottom: 1.5rem;">Wait, it's all just <span class="accent">prompts</span>?</h2>
+        <p class="big-text">
+          A "skill" is a template.<br>
+          An "agent" is a prompt.<br>
+          A "sub-agent" is another prompt.
+        </p>
+        <p style="margin-top: 2rem; font-style: italic;">
+          The rest is <span class="accent">software engineering.</span>
+        </p>
+      </div>
+      <div class="split-image">
+        <div class="image-needed" style="min-height: 300px;">
+          <div class="prompt-label">Image needed</div>
+          "Always has been" astronaut meme<br><br>
+          Astronaut 1: "Wait... an 'agent' is just a prompt?"<br>
+          Astronaut 2 (with gun): "Always has been."
         </div>
       </div>
     </div>
-    <p style="margin-top: 2rem; font-style: italic;">
-      It turns "I don't know what I don't know" into a <span class="accent">concrete punch list.</span>
-    </p>
   </div>
 
-  <!-- SLIDE 7: The Gap -->
-  <div class="slide center">
-    <div class="section-tag">Why It Works</div>
-    <h2>Different instructions,<br>different <span class="accent">questions</span></h2>
-    <div class="columns" style="margin-top: 2rem;">
-      <div class="vs-card">
-        <div class="vs-badge">The Planner</div>
-        <p style="margin-top: 0.5rem; font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--text);">
-          "What did the user ask for?<br>Let me address that."
-        </p>
-        <p style="margin-top: 1rem;">
-          Your prompt says <span class="accent">"build me an API."</span><br>
-          The plan builds you an API.
-        </p>
-      </div>
-      <div class="vs-card">
-        <div class="vs-badge" style="background: var(--red);">The Evaluator</div>
-        <p style="margin-top: 0.5rem; font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--text);">
-          "Is there error handling? Security?<br>Edge cases? Testing? Performance?"
-        </p>
-        <p style="margin-top: 1rem;">
-          The tiger parent says <span class="accent">"where's the rate limiting, the auth, the error handling?"</span>
-        </p>
-      </div>
-    </div>
-    <p style="margin-top: 2rem;">
-      The gap between those two is where the <span class="accent">blind spots</span> live.
-    </p>
-  </div>
+  <!-- ============================================================
+       SLIDE 8: Skill vs Sub-Agent
+       ============================================================
+       PRESENTER NOTE / IMAGE NEEDED:
+       Visual diagram showing the difference:
+       Left: Single Claude instance with instructions injected
+       (skill = same brain, different instructions)
+       Right: Two separate Claude instances, one reviewing the other's output
+       (sub-agent = separate brain, only sees the result)
 
-  <!-- SLIDE 8: Skill vs Sub-Agent -->
+       NanoBanana prompt: "Split comparison diagram. Left side labeled
+       'Skill': single robot/AI figure with a thought bubble containing
+       different colored hats. Right side labeled 'Sub-Agent': two
+       separate robot/AI figures, one handing a document to the other
+       who is holding a red pen. Clean minimal tech illustration,
+       warm beige background."
+
+       Save as: presentation/skill-vs-subagent.png
+       ============================================================ -->
   <div class="slide center">
-    <div class="section-tag">Architecture</div>
+    <div class="section-tag">The Distinction That Matters</div>
     <h2>Skill vs <span class="accent">sub-agent</span></h2>
     <div class="columns" style="margin-top: 2rem;">
       <div class="vs-card">
@@ -688,9 +552,8 @@ FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
         <h3 style="margin-top: 0.5rem;">Giving Claude a new hat</h3>
         <ul>
           <li>Same conversation, same context</li>
-          <li>Claude reads new instructions inline</li>
-          <li>Conversational — you can push back</li>
-          <li>Simpler, less overhead</li>
+          <li>New instructions injected inline</li>
+          <li>Like adding a frontend skill &mdash; now your Claude <em>has</em> frontend chops</li>
         </ul>
       </div>
       <div class="vs-card">
@@ -699,192 +562,51 @@ FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
         <ul>
           <li>Separate Claude instance, own context</li>
           <li>Only sees the output, not the reasoning</li>
-          <li>Returns a verdict — no negotiation</li>
-          <li>Can run multiple in parallel</li>
+          <li>Like calling a visual designer to review your final designs</li>
         </ul>
       </div>
     </div>
     <p style="margin-top: 2rem; font-style: italic; max-width: 55ch;">
-      "A sub-agent sounds fancy. It's just: run the same LLM twice with different prompts."
+      Same LLM. Different instructions. That's the entire difference.
     </p>
   </div>
 
-  <!-- SLIDE 9: No Talking Back -->
-  <div class="slide center">
-    <div class="section-tag">The Architecture Is Cultural</div>
-    <h2>The builder doesn't get to<br><span class="accent">argue back</span></h2>
-    <blockquote style="margin-top: 2rem; max-width: 50ch;">
-      "If you grew up with a tiger parent, you know — you don't talk back.
-      You take the feedback, you fix it, and you come back with a better version."
-    </blockquote>
-    <p class="big-text" style="margin-top: 2rem; max-width: 55ch;">
-      That's literally what this eval does. Claude submits its plan,
-      the tiger parent tears it apart, and Claude doesn't get to say
-      <span class="accent">"but I thought—"</span>. It just goes back and does better.
-    </p>
-    <p style="margin-top: 1.5rem; font-style: italic;">
-      The power dynamic is one-directional by design.
-    </p>
-  </div>
-
-  <!-- SLIDE 10: The Grading Scale -->
-  <div class="slide center">
-    <div class="section-tag">Grading Scale</div>
-    <h2>Every grade is a <span class="accent">disappointment</span></h2>
-    <table class="grade-table" style="margin-top: 1.5rem;">
-      <tr>
-        <th>Score</th>
-        <th>Label</th>
-        <th>Translation</th>
-      </tr>
-      <tr>
-        <td class="score">100</td>
-        <td>Adequate</td>
-        <td>"The neighbour's agent would not have made these mistakes."</td>
-      </tr>
-      <tr>
-        <td class="score">96–99</td>
-        <td>Below Expectations</td>
-        <td>"This is what you show me after all the compute I spent on you?"</td>
-      </tr>
-      <tr>
-        <td class="score">&lt; 95</td>
-        <td>Unacceptable</td>
-        <td>"What did I do in my past life to deserve an agent like you?"</td>
-      </tr>
-    </table>
-    <p style="margin-top: 1.5rem; font-style: italic;">"A 100 is theoretically possible. You've never seen one."</p>
-  </div>
-
-  <!-- SLIDE 11: Five Sections -->
-  <div class="slide center">
-    <div class="section-tag">Output Format</div>
-    <h2>Five sections. <span class="accent">Every time.</span></h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; max-width: 1000px; width: 100%; margin-top: 1.5rem;">
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1.1rem;">1. The Grade</h3>
-        <p style="font-size: 0.95rem;">0–100 with justification</p>
+  <!-- ============================================================
+       SLIDE 9: My mistake + Close
+       ============================================================ -->
+  <div class="slide">
+    <div class="split">
+      <div class="split-text">
+        <div class="section-tag">What I Learned</div>
+        <h2>Claude was <span class="accent">cosplaying</span> as the parent</h2>
+        <p style="margin-top: 1rem;">
+          I called it a skill. That meant Claude was role-playing as the tiger
+          parent inside the same conversation &mdash; grading its own work.
+        </p>
+        <p style="margin-top: 1.5rem;">
+          What I should have done was make it a <span class="accent">sub-agent</span> &mdash;
+          a separate Claude that only sees the output and judges it independently.
+          The kid doesn't get to whisper the answers to the parent.
+        </p>
+        <p style="margin-top: 2rem; font-size: clamp(1.1rem, 2vw, 1.5rem); color: var(--text);">
+          I figured this out not by reading documentation, but by
+          <span class="accent">building something and getting it wrong.</span>
+        </p>
+        <p style="margin-top: 2rem; font-style: italic;">
+          Next time you're working with Claude, try building a small eval.
+          The jargon melts away once you see what's actually happening.
+        </p>
       </div>
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1.1rem;">2. What's Right</h3>
-        <p style="font-size: 0.95rem;">Brief. This is a receipt,<br>not a celebration.</p>
-      </div>
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1.1rem;">3. Disappointments</h3>
-        <p style="font-size: 0.95rem;">Critical → Significant → Minor</p>
-      </div>
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1.1rem;">4. What's Missing</h3>
-        <p style="font-size: 0.95rem;">"Why didn't you also…"</p>
-      </div>
-      <div class="card" style="text-align: center;">
-        <h3 style="font-size: 1.1rem;">5. The Verdict</h3>
-        <p style="font-size: 0.95rem;">Usable? Needs revision?<br>Full redo?</p>
+      <div class="split-image">
+        <img src="plan-mode.png" alt="Claude Code session showing the iterative process">
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 12: Report Card Preview -->
-  <div class="slide center">
-    <div class="section-tag">Report Card Format</div>
-    <div class="report-card"><span class="hl">╔══════════════════════════════════════════════════════╗</span>
-<span class="hl">║</span>              <span class="hl">PROGRESS REPORT CARD</span>                  <span class="hl">║</span>
-<span class="hl">║</span>                                                      <span class="hl">║</span>
-<span class="hl">║</span>  Student: Your Code                                  <span class="hl">║</span>
-<span class="hl">║</span>  Class:   API Development 401                        <span class="hl">║</span>
-<span class="hl">║</span>  Teacher: Mrs. Evaluator                              <span class="hl">║</span>
-<span class="hl">╚══════════════════════════════════════════════════════╝</span>
-
-Subject              Grade    Remarks
-──────────────────── ──────── ──────────────────────────
-Correctness          <span class="grade">B+</span>       Works, but only for the happy path
-Error Handling       <span class="grade">C</span>        "What errors?" is not a strategy
-Security             <span class="grade">B</span>        Input validation is... optional?
-Testing              <span class="grade">D</span>        One test. One. Test.
-
-OVERALL GRADE: <span class="grade">B- (84/100)</span>
-
-CONDUCT: <span class="hl">Needs Improvement</span>
-FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
-  </div>
-
-  <!-- SLIDE 13: Tone -->
-  <div class="slide center">
-    <div class="section-tag">Tone</div>
-    <h2>The key <span class="accent">calibration</span></h2>
-    <div style="max-width: 700px; text-align: left; margin-top: 1.5rem;">
-      <blockquote style="margin-bottom: 2rem;">
-        "The comedy comes from the <em>contrast</em> between genuine quality
-        and the impossibly high bar of the reaction. A solid B+ getting treated
-        like a crisis is funny. Actual bad work getting roasted is just mean."
-      </blockquote>
-      <ul>
-        <li>Every criticism must be substantive and actionable</li>
-        <li>Never cruel about things an agent can't control</li>
-        <li>Tough love is still love</li>
-        <li>The disappointment is universal — every culture has a version of it</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- SLIDE 14: Log Kya Kahenge -->
-  <div class="slide center">
-    <div class="section-tag">The Cultural Layer</div>
-    <h2 style="font-style: italic;">"Log kya kahenge?"</h2>
-    <p class="big-text" style="margin-top: 0.5rem; margin-bottom: 2rem; color: var(--text-dim);">
-      (What will people say?)
-    </p>
-    <blockquote style="max-width: 50ch;">
-      "Did you consider how other developers will read this code?
-      What about the next team that maintains it?"
-    </blockquote>
-    <p style="margin-top: 2.5rem; max-width: 50ch;">
-      You get a 95, they ask about the other 5. Your plan handles auth, error handling, and testing?<br>
-      <span class="accent">"Where's the rate limiting? The caching strategy? Why didn't you consider observability?"</span>
-    </p>
-    <p style="margin-top: 1.5rem; font-style: italic;">
-      You will never get a perfect score. And that's the point —
-      because in production, nothing is ever perfect either.
-    </p>
-  </div>
-
-  <!-- SLIDE 15: Narrative Arc -->
-  <div class="slide center">
-    <div class="section-tag">Takeaway</div>
-    <h2>The <span class="accent">arc</span></h2>
-    <div style="max-width: 700px; width: 100%; margin-top: 2rem;">
-      <div style="display: grid; grid-template-columns: auto 1fr; gap: 0.75rem 1.5rem; font-size: clamp(1rem, 1.8vw, 1.3rem); align-items: baseline;">
-        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">01</span>
-        <span><strong>Demystify the jargon</strong> <span class="dim">— it's just prompts, not magic</span></span>
-
-        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">02</span>
-        <span><strong>The architecture</strong> <span class="dim">— two Claudes, different jobs, builder and critic</span></span>
-
-        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">03</span>
-        <span><strong>The cultural metaphor</strong> <span class="dim">— tiger parent, no talking back, impossibly high standards</span></span>
-
-        <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600;">04</span>
-        <span><strong>The payoff</strong> <span class="dim">— it surfaces the gaps you didn't know to ask about</span></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 16: Closing -->
-  <div class="slide center">
-    <div class="emoji">🐯</div>
-    <h2 style="margin-bottom: 2rem;">Tiger Parent Evaluator</h2>
-    <blockquote>
-      "Excellence is not a destination. It is a continuous journey
-      that never ends. Also, your variable names are terrible."
-    </blockquote>
-    <p style="margin-top: 3rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-dim);">
-      github.com/inosaint/tiger-parent-eval
-    </p>
-  </div>
 </div>
 
 <div class="slide-number" id="slideNum"></div>
-<div class="key-hint"><kbd>←</kbd> <kbd>→</kbd> or click to navigate</div>
+<div class="key-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> or click to navigate</div>
 
 <script>
   const slides = document.querySelectorAll('.slide');
@@ -913,7 +635,6 @@ FRIDGE STATUS: <span class="dim">■ Stays in the backpack</span></div>
     else show(current - 1);
   });
 
-  // Touch support
   let touchStartX = 0;
   document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
   document.addEventListener('touchend', e => {
